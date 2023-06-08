@@ -7,15 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingMvcApp.Models;
 
+// using Microsoft.AspNetCore.Authorization;
+
 namespace ShoppingMvcApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ShoppingMvcAppContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,ShoppingMvcAppContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -27,6 +31,55 @@ namespace ShoppingMvcApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        // [Authorize]
+        public IActionResult Form()
+        {
+            ViewData["Mail"] = Request.Form["mail"];
+            string str_mail = Request.Form["mail"];
+            ViewData["Password"] = Request.Form["pass"];
+            string str_pass = Request.Form["pass"];
+
+            var db_data  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
+
+   
+            foreach (var item in db_data)
+            {
+                if(item == str_mail){
+                    foreach(var item2 in db_pass){
+                        if(item2 == str_pass){
+                            Console.WriteLine("ログイン成功");
+                        }else{
+                            Console.WriteLine("パスワードが違います。");
+                            Console.WriteLine("ログイン失敗");
+                        }
+                    }
+                   
+                }else{
+                    Console.WriteLine("ログインIDがありません。");
+                    Console.WriteLine("ログイン失敗");
+                }
+            }
+            
+            return View("Privacy");
+        }
+        // public async Task<IActionResult> Find()
+        // {
+        //     return View(await _context.Person.ToListAsync());
+        // }
+
+
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public  async Task<IActionResult> Find(string find){
+        //         var People  = await _context.Person.Where(m => m.Name == find).ToListAsync();
+        //          return View(Index);
+        // }
+
+        // public IActionResult NewCreatePerson(){
+        //     return View(Create.cshtml);
+        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

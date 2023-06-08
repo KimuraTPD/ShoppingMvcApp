@@ -29,7 +29,7 @@ namespace ShoppingMvcApp
 
             services.AddDbContext<ShoppingMvcAppContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("ShoppingMvcAppContext")));
-        }
+                        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
