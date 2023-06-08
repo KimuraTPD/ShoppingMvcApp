@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.Models;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoppingMvcApp.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ShoppingMvcAppContext _context;
+
+        private List<Product> cartList = new List<Product>();
 
         public ProductsController(ShoppingMvcAppContext context)
         {
@@ -21,7 +26,66 @@ namespace ShoppingMvcApp.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("Index：開始");
             return View(await _context.Product.ToListAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCart(int productId, string productName, int price) {
+            // Sessionからカートを取得
+            if(HttpContext.Session.Get("cartList") != null)
+            {
+                cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+            }
+            Console.WriteLine("id = " + productId + ", name = " + productName + ", price = " + price);
+
+            Product product = new Product(productId, productName, price);
+
+            // カートリストに追加
+            cartList.Add(product);
+
+            foreach(Product p in cartList)
+            {
+                p.showData();
+            }
+
+            HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+
+            return View("../Products/index", await _context.Product.ToListAsync());
+        }
+
+       public async Task<IActionResult> AddCart(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View("../Home/index");
+        }
+
+
+
+        public static byte[] ObjectToBytes(Object ob)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, ob);
+            return ms.ToArray();
+        }
+
+        public static Object BytesToObject(byte[] arr)
+        {
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            ms.Write(arr, 0, arr.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            return (Object)bf.Deserialize(ms);
         }
 
         // GET: Products/Details/5

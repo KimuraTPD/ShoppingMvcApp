@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var userName = "";
+    if(ViewData["userName"] != null){
+        userName = ViewData["userName"].ToString();
+    }else{
+        userName = "ログインしてください";
+    }
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,9 +33,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">@userName</li>
                     </ul>
                 </div>
-            </div>
+            </di>
         </nav>
     </header>
     <div class="container">
