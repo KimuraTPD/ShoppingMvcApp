@@ -32,12 +32,21 @@
     </dl>
 </div>
 <div>
-    <form method="POST" asp-controller="Products" asp-action="AddCart">
-        <intput type="hidden" name="productId" value=@Model.productId />
-        <intput type="hidden" name="productName" value=@Model.productName />
-        <intput type="hidden" name="price" value=@Model.price />
-        <a asp-action="AddCart">カートに入れる</a>　|
-    </form>
+    <form asp-action="AddCart" asp-route-id="@Model.productId" method="POST">
+        <select name="count">
+            <option value=0 selected>0</option>
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+            <option value=9>9</option>               
+        </select>
+        <input type="submit" value="カートに入れる" class="btn btn-primary">
+    </Form>
     <a asp-action="Edit" asp-route-id="@Model.productId">編集</a> |
     <a asp-action="Index">商品一覧へ</a>
 </div>

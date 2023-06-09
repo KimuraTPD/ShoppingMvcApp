@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ShoppingApp.Models;
+using ShoppingMvcApp.Models;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +16,7 @@ namespace ShoppingMvcApp.Controllers
     {
         private readonly ShoppingMvcAppContext _context;
 
-        private List<Product> cartList = new List<Product>();
+        public List<Product> cartList = new List<Product>();
 
         public ProductsController(ShoppingMvcAppContext context)
         {
@@ -70,7 +70,7 @@ namespace ShoppingMvcApp.Controllers
                 // カートリストに追加
                 cartList.Add(product);
             }
-            
+
             foreach(Product p in cartList)
             {
                 p.showData();

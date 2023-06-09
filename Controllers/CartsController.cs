@@ -9,6 +9,8 @@ using ShoppingMvcApp.Models;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 // using Microsoft.AspNetCore.Authorization;
 
@@ -18,6 +20,8 @@ namespace ShoppingMvcApp.Controllers
     {
         private ShoppingMvcAppContext _context;
 
+        public List<Product> cartList = new List<Product>();
+
         public CartsController(ShoppingMvcAppContext context)
         {
             _context = context;
@@ -25,7 +29,21 @@ namespace ShoppingMvcApp.Controllers
 
         public IActionResult Index()
         {
+            if(HttpContext.Session.Get("cartList") != null)
+            {
+                cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+            }
+            ViewData["cartList"] = cartList;
             return View();
+        }
+
+        public static Object BytesToObject(byte[] arr)
+        {
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+            ms.Write(arr, 0, arr.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            return (Object)bf.Deserialize(ms);
         }
 
         [HttpPost]

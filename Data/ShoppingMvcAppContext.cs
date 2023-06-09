@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ShoppingApp.Models;
+using ShoppingMvcApp.Models;
 
     public class ShoppingMvcAppContext : DbContext
     {
@@ -12,7 +12,7 @@ using ShoppingApp.Models;
         {
         }
 
-        public DbSet<ShoppingApp.Models.Product> Product { get; set; }
+        public DbSet<ShoppingMvcApp.Models.Product> Product { get; set; }
 
-        public DbSet<ShoppingApp.Models.User> User { get; set; }
+        public DbSet<ShoppingMvcApp.Models.User> User { get; set; }
     }

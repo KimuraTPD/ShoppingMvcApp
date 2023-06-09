@@ -1,7 +1,8 @@
 @model IEnumerable<ShoppingApp.Models.Product>
-
+@using ShoppingMvcApp.Models;
 @{
     ViewData["Title"] = "カート";
+    List<Product> cartList = (List<Product>)ViewData["cartList"];
 }
 
 <h1>カート</h1>
@@ -27,6 +28,24 @@
             <th></th>
         </tr>
     </thead>
+    <tbody>
+        @foreach (var item in cartList) {
+        <tr>
+            <td>
+                <img src=@item.image_url width="40" height="40">
+            </td>
+            <td>
+                @item.productName
+            </td>
+            <td>
+                @item.price
+            </td>
+            <td>
+                @item.count
+            </td>
+        </tr>
+        }
+    </tbody>
     <tbody>
     <div class="text-right">
         <form method="post" asp-controller="Carts" asp-action="OrderedPage">
