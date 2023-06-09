@@ -21,6 +21,8 @@ namespace ShoppingApp.Models
         public string create_date { get; set; }
         [Display(Name="商品画像")]
         public string image_url { get; set; }
+        [Display(Name="個数")]
+        public int count { get; set; }
 
         public Product(int productId, string productName, int price)
         {
@@ -28,6 +30,14 @@ namespace ShoppingApp.Models
             this.productName = productName;
             this.price = price;
         }
+        public Product(int productId, string productName, int price,int count)
+        {
+            this.productId = productId;
+            this.productName = productName;
+            this.price = price;
+            this.count =count;
+        }
+
         public void showData()
         {
             Console.WriteLine("priductId = " + productId + ", productName = " + productName + ", price = " + price + ", create_date = " + create_date + ", image_url" + image_url);

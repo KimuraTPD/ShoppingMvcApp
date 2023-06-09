@@ -53,6 +53,7 @@ namespace ShoppingMvcApp.Controllers
 
             return View("../Products/index", await _context.Product.ToListAsync());
         }
+       
 
        public async Task<IActionResult> AddCart(int? id)
         {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingMvcApp.Migrations
 {
-    public partial class InitiakCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace ShoppingMvcApp.Migrations
                     productName = table.Column<string>(nullable: true),
                     price = table.Column<int>(nullable: false),
                     create_date = table.Column<string>(nullable: true),
-                    image_url = table.Column<string>(nullable: true)
+                    image_url = table.Column<string>(nullable: true),
+                    count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

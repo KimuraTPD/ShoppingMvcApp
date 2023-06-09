@@ -1,0 +1,39 @@
+@model IEnumerable<ShoppingApp.Models.Product>
+
+@{
+    ViewData["Title"] = "カート";
+}
+
+<h1>カート</h1>
+
+<p>
+    <a asp-action="Edit">Edit</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.image_url) 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productName) 
+            </th>
+            <th>
+               @Html.DisplayNameFor(model => model.price) 
+            <th>
+               @Html.DisplayNameFor(model => model.count) 
+            </th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    <div class="text-right">
+        <form method="post" asp-controller="Carts" asp-action="OrderedPage">
+            <div class="form-group">
+                <input type="submit" value = "注文確定" class="btn btn-primary"  />
+            </div>
+        </form>
+    </div>
+    </tbody>
+</table>

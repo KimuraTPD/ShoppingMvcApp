@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ShoppingMvcApp.Migrations
 {
     [DbContext(typeof(ShoppingMvcAppContext))]
-    [Migration("20230608050807_InitiakCreate")]
-    partial class InitiakCreate
+    [Migration("20230609040541_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,9 @@ namespace ShoppingMvcApp.Migrations
                 {
                     b.Property<int>("productId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("count")
                         .HasColumnType("int");
 
                     b.Property<string>("create_date")

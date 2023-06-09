@@ -21,6 +21,9 @@ namespace ShoppingMvcApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("count")
+                        .HasColumnType("int");
+
                     b.Property<string>("create_date")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
