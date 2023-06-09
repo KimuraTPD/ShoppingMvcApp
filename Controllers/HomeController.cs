@@ -67,23 +67,26 @@ namespace ShoppingMvcApp.Controllers
              //return View();
             return View("Index");
         }
-        // public async Task<IActionResult> Find()
-        // {
-        //     return View(await _context.Person.ToListAsync());
-        // }
 
+        // public IActionResult Create()
+        // {
+        //     return View();
+        // }
 
         // [HttpPost]
         // [ValidateAntiForgeryToken]
-        // public  async Task<IActionResult> Find(string find){
-        //         var People  = await _context.Person.Where(m => m.Name == find).ToListAsync();
-        //          return View(Index);
-        // }
-
-        // public IActionResult NewCreatePerson(){
-        //     return View(Create.cshtml);
-        // }
-
+        // public async Task<IActionResult> Create([Bind("userID,name,mail,password,tel,address")] User user)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         _context.Add(user);
+        //         await _context.SaveChangesAsync();
+        //         return RedirectToAction(nameof(Index));
+        //     }
+            
+        //     return View(user);
+        // }  
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

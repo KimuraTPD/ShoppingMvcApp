@@ -1,15 +1,15 @@
 @model IEnumerable<ShoppingApp.Models.User>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "会員登録";
 }
 
-<h1>Index</h1>
+<!-- <h1>Index</h1> -->
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">会員登録</a>
 </p>
-<table class="table">
+<!-- <table class="table">
     <thead>
         <tr>
             <th>
@@ -29,31 +29,5 @@
             </th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.address)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.userId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.userId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.userId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    </thead> 
+<tbody>-->

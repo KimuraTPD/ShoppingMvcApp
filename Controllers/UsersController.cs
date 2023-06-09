@@ -47,6 +47,11 @@ namespace ShoppingMvcApp.Controllers
         {
             return View();
         }
+        //  [HttpPost]
+        // public IActionResult CreateUser()
+        // {
+        //     return View("../Users/Index");
+        // }
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

@@ -141,12 +141,14 @@ namespace ShoppingMvcApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("productId,productName,price,create_date,image_url")] Product product)
         {
+            product.count = 0;
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(product);
         }
 

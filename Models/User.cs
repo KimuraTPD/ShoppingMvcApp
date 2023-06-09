@@ -18,5 +18,19 @@ namespace ShoppingApp.Models
         public string tel { get; set; }
         public string address { get; set; }
         // public List<Product> buyList { get; set; }
+
+        public User(){
+
+        }
+
+        public User(int userID, string userName, string mail, string password , string tel, string address)
+        {
+            this.userId = userID;
+            this.name = userName;
+            this.mail = mail;
+            this.password = password;
+            this.tel =  tel;
+            this.address = address;
+        }
     }
 }
