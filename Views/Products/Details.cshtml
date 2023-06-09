@@ -9,6 +9,7 @@
 <div>
     <h4>Product</h4>
     <hr />
+    <img src=@Model.image_url width="80" height="80">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.productName)
@@ -28,15 +29,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.create_date)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.image_url)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.image_url)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.productId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <form method="POST" asp-controller="Products" asp-action="AddCart">
+        <intput type="hidden" name="productId" value=@Model.productId />
+        <intput type="hidden" name="productName" value=@Model.productName />
+        <intput type="hidden" name="price" value=@Model.price />
+        <a asp-action="AddCart">カートに入れる</a>　|
+    </form>
+    <a asp-action="Edit" asp-route-id="@Model.productId">編集</a> |
+    <a asp-action="Index">商品一覧へ</a>
 </div>

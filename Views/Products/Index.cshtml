@@ -28,10 +28,11 @@
         </tr>
     </thead>
     <tbody>
+
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.productId">
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.productId">
                     <img src=@item.image_url width="40" height="40">
                 </a>
             </td>
@@ -45,11 +46,13 @@
                 @Html.DisplayFor(modelItem => item.create_date)
             </td>
             <td>
+            <a asp-action="AddCart" asp-route-id="@item.productId">カートに入れる</a>
                 <form method="POST" asp-controller="Products" asp-action="AddCart">
-                    <intput type="hidden" name="productId" value=@item.productId />
-                    <intput type="hidden" name="productName" value=@item.productName />
-                    <intput type="hidden" name="price" value=@item.price />
-                    <a asp-action="AddCart">カートに入れる</a>
+                    <intput type="hidden" name="productId" id="productId" value=@item.productId />
+                    <intput type="hidden" name="productName" id="productName" value=@item.productName />
+                    <intput type="hidden" name="price" id="price" value=@item.price />
+                    <intput type="hidden" name="prices" id="prices" value=5000 />
+                    <input type="submit" value="カートに入れる" />
                 </form>
                 <a asp-action="Delete" asp-route-id="@item.productId">削除</a>
             </td>

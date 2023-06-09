@@ -50,7 +50,7 @@ namespace ShoppingMvcApp.Controllers
                     foreach(var item2 in db_pass){
                         if(item2.password == str_pass){
                             Console.WriteLine("ログイン成功");
-                            return View("../Products/Index");
+                            return View("../Products/Index", _context.Product);
                         }else{
                             Console.WriteLine("パスワードが違います。");
                             Console.WriteLine("ログイン失敗");
