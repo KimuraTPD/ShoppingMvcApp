@@ -30,16 +30,54 @@ namespace ShoppingMvcApp.Controllers
             return View(await _context.Product.ToListAsync());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddCart(int productId, string productName, int price) {
+        // [HttpPost]
+        // public async Task<IActionResult> AddCart(int productId, string productName, int price) {
+        //     string productNameFromRequestForm = Request.Form["productName"];
+
+        //     Console.WriteLine("nameFromForm" )
+
+        //     // Sessionからカートを取得
+        //     if(HttpContext.Session.Get("cartList") != null)
+        //     {
+        //         cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+        //     }
+        //     Console.WriteLine("id = " + productId + ", name = " + productName + ", price = " + price);
+
+        //     Product product = new Product(productId, productName, price);
+
+        //     // カートリストに追加
+        //     cartList.Add(product);
+
+        //     foreach(Product p in cartList)
+        //     {
+        //         p.showData();
+        //     }
+
+        //     HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+
+        //     return View("../Products/index", await _context.Product.ToListAsync());
+        // }
+
+        
+        public async Task<IActionResult> AddCart(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.productId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             // Sessionからカートを取得
             if(HttpContext.Session.Get("cartList") != null)
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
             }
-            Console.WriteLine("id = " + productId + ", name = " + productName + ", price = " + price);
-
-            Product product = new Product(productId, productName, price);
 
             // カートリストに追加
             cartList.Add(product);
@@ -54,23 +92,6 @@ namespace ShoppingMvcApp.Controllers
             return View("../Products/index", await _context.Product.ToListAsync());
         }
        
-
-       public async Task<IActionResult> AddCart(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View("../Home/index");
-        }
-
-
 
         public static byte[] ObjectToBytes(Object ob)
         {
