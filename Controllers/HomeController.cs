@@ -46,23 +46,26 @@ namespace ShoppingMvcApp.Controllers
    
             foreach (var item in db_data)
             {
-                if(item == str_mail){
+                if(item.mail == str_mail){
                     foreach(var item2 in db_pass){
-                        if(item2 == str_pass){
+                        if(item2.password == str_pass){
                             Console.WriteLine("ログイン成功");
+                            return View("../Products/Index");
                         }else{
                             Console.WriteLine("パスワードが違います。");
                             Console.WriteLine("ログイン失敗");
+                             return View("Index");
                         }
                     }
                    
                 }else{
                     Console.WriteLine("ログインIDがありません。");
                     Console.WriteLine("ログイン失敗");
+                    return View("Index");
                 }
             }
-            
-            return View("Privacy");
+             //return View();
+            return View("Index");
         }
         // public async Task<IActionResult> Find()
         // {
