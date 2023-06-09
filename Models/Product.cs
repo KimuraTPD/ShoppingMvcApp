@@ -42,7 +42,8 @@ namespace ShoppingApp.Models
 
         public void showData()
         {
-            Console.WriteLine("priductId = " + productId + ", productName = " + productName + ", price = " + price + ", create_date = " + create_date + ", image_url" + image_url);
+            Console.WriteLine("priductId = " + productId + ", productName = " + productName + ", price = " + price +
+                ", create_date = " + create_date + ", image_url" + image_url + ", count = " + count);
         }
     }
 }

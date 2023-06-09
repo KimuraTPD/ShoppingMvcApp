@@ -53,10 +53,24 @@ namespace ShoppingMvcApp.Controllers
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
             }
-
-            // カートリストに追加
-            cartList.Add(product);
-
+            bool check = false;
+            foreach(var item in cartList)
+            {
+                // 既にカートに同じ商品が追加されている場合
+                if(item.productId == product.productId)
+                {
+                    check = true;
+                    // カート内の商品のカウントに加算
+                    item.count += product.count;
+                }
+            }
+            // カート内に同じ商品が追加されていない場合
+            if(!check)
+            {
+                // カートリストに追加
+                cartList.Add(product);
+            }
+            
             foreach(Product p in cartList)
             {
                 p.showData();
