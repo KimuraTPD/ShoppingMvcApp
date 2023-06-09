@@ -30,37 +30,11 @@ namespace ShoppingMvcApp.Controllers
             return View(await _context.Product.ToListAsync());
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> AddCart(int productId, string productName, int price) {
-        //     string productNameFromRequestForm = Request.Form["productName"];
-
-        //     Console.WriteLine("nameFromForm" )
-
-        //     // Sessionからカートを取得
-        //     if(HttpContext.Session.Get("cartList") != null)
-        //     {
-        //         cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
-        //     }
-        //     Console.WriteLine("id = " + productId + ", name = " + productName + ", price = " + price);
-
-        //     Product product = new Product(productId, productName, price);
-
-        //     // カートリストに追加
-        //     cartList.Add(product);
-
-        //     foreach(Product p in cartList)
-        //     {
-        //         p.showData();
-        //     }
-
-        //     HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
-
-        //     return View("../Products/index", await _context.Product.ToListAsync());
-        // }
-
-        
-        public async Task<IActionResult> AddCart(int? id)
+        // カートに入れる
+        public async Task<IActionResult> AddCart(int? id, int count)
         {
+
+            Console.WriteLine("count = " + count);
             if (id == null)
             {
                 return NotFound();
@@ -68,6 +42,7 @@ namespace ShoppingMvcApp.Controllers
 
             var product = await _context.Product
                 .FirstOrDefaultAsync(m => m.productId == id);
+            product.count = count;
             if (product == null)
             {
                 return NotFound();
@@ -87,7 +62,11 @@ namespace ShoppingMvcApp.Controllers
                 p.showData();
             }
 
+            // カートリストをSessionにセット
             HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+
+            // カートリストをViewDataにセット
+            ViewData["cartList"] = cartList;
 
             return View("../Products/index", await _context.Product.ToListAsync());
         }

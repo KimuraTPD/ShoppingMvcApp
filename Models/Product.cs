@@ -24,6 +24,8 @@ namespace ShoppingApp.Models
         [Display(Name="個数")]
         public int count { get; set; }
 
+        public Product() { }
+
         public Product(int productId, string productName, int price)
         {
             this.productId = productId;

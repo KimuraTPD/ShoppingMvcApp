@@ -2,12 +2,23 @@
 
 @{
     ViewData["Title"] = "商品一覧";
+    List<int> countList = new List<int>();
+    for(int i = 1; i < 10; i++){
+        countList.Add(i);
+    }
 }
 
 <h1>商品一覧</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
+        <div class="text-right">
+            <form method="post" asp-controller="Carts" asp-action="Index">
+                <div class="form-group">
+                    <input type="submit" value = "カート" class="btn btn-primary"  />
+                </div>
+            </form>
+        </div>
 </p>
 <table class="table">
     <thead>
@@ -23,6 +34,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.create_date)
+            </th>
+            <th>
+                @Html.DisplayName("個数")
             </th>
             <th></th>
         </tr>
@@ -46,14 +60,14 @@
                 @Html.DisplayFor(modelItem => item.create_date)
             </td>
             <td>
-            <a asp-action="AddCart" asp-route-id="@item.productId">カートに入れる</a>
-                <form method="POST" asp-controller="Products" asp-action="AddCart">
-                    <intput type="hidden" name="productId" id="productId" value=@item.productId />
-                    <intput type="hidden" name="productName" id="productName" value=@item.productName />
-                    <intput type="hidden" name="price" id="price" value=@item.price />
-                    <intput type="hidden" name="prices" id="prices" value=5000 />
-                    <input type="submit" value="カートに入れる" />
-                </form>
+            <form asp-action="AddCart" asp-route-id="@item.productId" method="POST">
+                        <div class="form-group">
+                                @Html.DropDownList("count", 
+                                    new SelectList(countList),
+                                    new { @class = "form-control" })
+                            <input type="submit" value="カートに入れる" class="btn btn-primary">
+                        </div>
+            </form>
                 <a asp-action="Delete" asp-route-id="@item.productId">削除</a>
             </td>
         </tr>
