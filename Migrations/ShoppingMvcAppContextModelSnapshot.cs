@@ -15,7 +15,7 @@ namespace ShoppingMvcApp.Migrations
                 .HasAnnotation("ProductVersion", "3.1.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("ShoppingApp.Models.Product", b =>
+            modelBuilder.Entity("ShoppingMvcApp.Models.Product", b =>
                 {
                     b.Property<int>("productId")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace ShoppingMvcApp.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("ShoppingApp.Models.User", b =>
+            modelBuilder.Entity("ShoppingMvcApp.Models.User", b =>
                 {
                     b.Property<int>("userId")
                         .ValueGeneratedOnAdd()

@@ -4,12 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace ShoppingMvcApp.Models
 {
+    [Serializable]
     public class User
     {
-        // ユーザーID
+          // ユーザーID
         [Key]
         public int userId { get; set; }
         public string name { get; set; }
@@ -32,5 +36,29 @@ namespace ShoppingMvcApp.Models
             this.tel =  tel;
             this.address = address;
         }
+
+        public User(string mail,string password){
+            this.mail = mail;
+            this.password = password;
+        }
+
+        internal byte[] ObjectToBytes(Object ob)
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream();
+                bf.Serialize(ms, ob);
+                return ms.ToArray();
+            }
+
+
+            // convert byte[] to object.
+        internal Object ct(byte[] arr)
+            {
+                MemoryStream ms = new MemoryStream();
+                BinaryFormatter bf = new BinaryFormatter();
+                ms.Write(arr, 0, arr.Length);
+                ms.Seek(0, SeekOrigin.Begin);
+                return (Object)bf.Deserialize(ms);
+            }
     }
 }

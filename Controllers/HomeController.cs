@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingMvcApp.Models;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.AspNetCore.Http;
 
 // using Microsoft.AspNetCore.Authorization;
 
@@ -20,6 +23,7 @@ namespace ShoppingMvcApp.Controllers
         {
             _logger = logger;
             _context = context;
+           // User user = new User();
         }
 
         public IActionResult Index()
@@ -31,9 +35,10 @@ namespace ShoppingMvcApp.Controllers
         {
             return View();
         }
+
         [HttpPost]
         // [Authorize]
-        public IActionResult Form()
+        public IActionResult Form(string mail,string pass)
         {
             ViewData["Mail"] = Request.Form["mail"];
             string str_mail = Request.Form["mail"];
@@ -43,6 +48,17 @@ namespace ShoppingMvcApp.Controllers
             var db_data  = _context.User.Where(user => user.mail == str_mail).ToArray();
             var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
 
+           // HttpContext.Session.SetString("Mail",mail);
+           // HttpContext.Session.SetString("Pass",pass);
+             User user = new User(mail,pass);
+            Console.WriteLine(mail);
+            Console.WriteLine(pass);
+            HttpContext.Session.Set("object", user.ObjectToBytes(user));
+
+             User user2 = (User)user.ct(HttpContext.Session.Get("object"));
+            // ViewData["mail"] = ob2.GetMail();
+            // ViewData["pass"] = ob2.GetPass();
+    
    
             foreach (var item in db_data)
             {
@@ -64,28 +80,9 @@ namespace ShoppingMvcApp.Controllers
                     return View("Index");
                 }
             }
-             //return View();
+             
             return View("Index");
-        }
-
-        // public IActionResult Create()
-        // {
-        //     return View();
-        // }
-
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Create([Bind("userID,name,mail,password,tel,address")] User user)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         _context.Add(user);
-        //         await _context.SaveChangesAsync();
-        //         return RedirectToAction(nameof(Index));
-        //     }
-            
-        //     return View(user);
-        // }  
+        }           
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

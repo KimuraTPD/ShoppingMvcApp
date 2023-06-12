@@ -1,4 +1,4 @@
-@model IEnumerable<ShoppingApp.Models.Product>
+@model IEnumerable<ShoppingMvcApp.Models.Product>
 
 @{
     ViewData["Title"] = "商品一覧";
@@ -70,6 +70,9 @@
                     </select>
                     <input type="submit" value="カートに入れる" class="btn btn-primary">
                 </Form>
+
+            <p>@ViewData["mail"]</p>
+            <p>@ViewData["pass"]</p>
             </td>
         </tr>
 }
