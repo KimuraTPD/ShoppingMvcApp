@@ -30,6 +30,7 @@ namespace ShoppingMvcApp
             services.AddDbContext<ShoppingMvcAppContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("ShoppingMvcAppContext")));
 
+           // services.AddSession(options => options.IdleTimeout = TimeSpan.FromDays(7));
             services.AddSession();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

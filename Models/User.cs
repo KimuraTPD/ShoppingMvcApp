@@ -7,11 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using ShoppingMvcApp.Models;
 
 namespace ShoppingMvcApp.Models
 {
     [Serializable]
-    public class User
+    public  class User
     {
           // ユーザーID
         [Key]

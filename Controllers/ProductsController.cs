@@ -21,19 +21,48 @@ namespace ShoppingMvcApp.Controllers
         public ProductsController(ShoppingMvcAppContext context)
         {
             _context = context;
+
+          
+       //string a = ViewData["mail"].ToSting;
+        
+            // User user = new User(mail,pass);
+            // var db_mail  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            // var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
+
+            //ユーザーIDとパスワードから電話番号/住所/名前を検索　保留
+            //  var db_name  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            //  var db_tel  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            //  var db_address  = _context.User.Where((user => user.address == str_mail).ToArray();
+
+            
+            // HttpContext.Session.Set("object", user.ObjectToBytes(user));
+
+            //  user = (User)user.ct(HttpContext.Session.Get("object"));
+            //  ViewData["mail"] = user.mail;
+            //  ViewData["pass"] =  user.password;
+            //   Console.WriteLine("メアド" +user.mail);
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
             Console.WriteLine("Index：開始");
+            User user = new User(); 
+            user = (User)user.ct(HttpContext.Session.Get("object"));
+            ViewData["mail"] = user.mail;
+            ViewData["pass"] =  user.password;
+            //  ViewData["mail"] = user.mail;
+            //  ViewData["pass"] =  user.password;
             return View(await _context.Product.ToListAsync());
         }
 
         // カートに入れる
         public async Task<IActionResult> AddCart(int? id, int count)
         {
-
+            User user = new User(); 
+            user = (User)user.ct(HttpContext.Session.Get("object"));
+            ViewData["mail"] = user.mail;
+            ViewData["pass"] =  user.password;
             Console.WriteLine("count = " + count);
             if (id == null)
             {

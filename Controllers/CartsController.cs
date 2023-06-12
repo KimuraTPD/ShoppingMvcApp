@@ -25,10 +25,15 @@ namespace ShoppingMvcApp.Controllers
         public CartsController(ShoppingMvcAppContext context)
         {
             _context = context;
+            //User user = new User();
         }
 
         public IActionResult Index()
         {
+            User user = new User(); 
+            user = (User)user.ct(HttpContext.Session.Get("object"));
+            ViewData["mail"] = user.mail;
+            ViewData["pass"] =  user.password;
             if(HttpContext.Session.Get("cartList") != null)
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
@@ -69,6 +74,10 @@ namespace ShoppingMvcApp.Controllers
         //     }
         // }
         public IActionResult OrderedPage(){
+            User user = new User(); 
+            user = (User)user.ct(HttpContext.Session.Get("object"));
+            ViewData["mail"] = user.mail;
+            ViewData["pass"] =  user.password;
             return View("../Carts/Ordered");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

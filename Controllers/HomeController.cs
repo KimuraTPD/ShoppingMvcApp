@@ -45,22 +45,22 @@ namespace ShoppingMvcApp.Controllers
             ViewData["Password"] = Request.Form["pass"];
             string str_pass = Request.Form["pass"];
 
-            var db_data  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            var db_mail  = _context.User.Where(user => user.mail == str_mail).ToArray();
             var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
 
-           // HttpContext.Session.SetString("Mail",mail);
-           // HttpContext.Session.SetString("Pass",pass);
-             User user = new User(mail,pass);
-            Console.WriteLine(mail);
-            Console.WriteLine(pass);
+            //ユーザーIDとパスワードから電話番号/住所/名前を検索　保留
+            //  var db_name  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            //  var db_tel  = _context.User.Where(user => user.mail == str_mail).ToArray();
+            //  var db_address  = _context.User.Where((user => user.address == str_mail).ToArray();
+
+            User user = new User(mail,pass);
             HttpContext.Session.Set("object", user.ObjectToBytes(user));
 
-             User user2 = (User)user.ct(HttpContext.Session.Get("object"));
-            // ViewData["mail"] = ob2.GetMail();
-            // ViewData["pass"] = ob2.GetPass();
+             user = (User)user.ct(HttpContext.Session.Get("object"));
+             ViewData["mail"] = user.mail;
+             ViewData["pass"] =  user.password;
     
-   
-            foreach (var item in db_data)
+            foreach (var item in db_mail)
             {
                 if(item.mail == str_mail){
                     foreach(var item2 in db_pass){
