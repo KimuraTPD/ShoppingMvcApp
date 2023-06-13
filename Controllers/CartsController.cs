@@ -30,13 +30,20 @@ namespace ShoppingMvcApp.Controllers
 
         public IActionResult Index()
         {
-            User user = new User(); 
-            user = (User)user.ct(HttpContext.Session.Get("object"));
-            ViewData["mail"] = user.mail;
-            ViewData["pass"] =  user.password;
-            if(HttpContext.Session.Get("cartList") != null)
-            {
-                cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+            cartList = new List<Product>();
+            if(HttpContext.Session.Get("object") != null){
+                User user = new User(); 
+                user = (User)user.ct(HttpContext.Session.Get("object"));
+                ViewData["mail"] = user.mail;
+                ViewData["pass"] =  user.password;
+                if(HttpContext.Session.Get("cartList") != null)
+                {
+                    cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+                }
+                
+            }else{
+                ViewData["Message"] = "ログインしてください。";  
+               
             }
             ViewData["cartList"] = cartList;
             return View();
@@ -59,62 +66,67 @@ namespace ShoppingMvcApp.Controllers
         }
 
         public IActionResult OrderedPage(){
-            User user = new User(); 
-            user = (User)user.ct(HttpContext.Session.Get("object"));
-            ViewData["mail"] = user.mail;
-            ViewData["pass"] =  user.password;
+            if(HttpContext.Session.Get("object") != null){
+                User user = new User(); 
+                user = (User)user.ct(HttpContext.Session.Get("object"));
+                ViewData["mail"] = user.mail;
+                ViewData["pass"] =  user.password;
+            }else{
+                 ViewData["Message"] = "ログインしてください。"; 
+            }
             return View("../Carts/Ordered");
         }
 
          public async Task<IActionResult> DeleteCart(int? id)
         {
-            User user = new User(); 
-            user = (User)user.ct(HttpContext.Session.Get("object"));
-            ViewData["mail"] = user.mail;
-            ViewData["pass"] =  user.password;
+           
+                User user = new User(); 
+                user = (User)user.ct(HttpContext.Session.Get("object"));
+                ViewData["mail"] = user.mail;
+                ViewData["pass"] =  user.password;
 
-            int id2 = (int)id;
-   
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.productId == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            // Sessionからカートを取得
-            if(HttpContext.Session.Get("cartList") != null)
-            {
-                Console.WriteLine("session get");
-                cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
-            }
-            bool check = false;
-            for(int i =0; i< cartList.Count; i++)
-            {
-                // 既にカートに同じ商品が追加されている場合
-                if(cartList[i].productId== product.productId)
+                int id2 = (int)id;
+    
+                if (id == null)
                 {
-                    cartList.RemoveAt(i);
-                    Console.WriteLine("cart");
+                    return NotFound();
                 }
-            }
 
-            foreach(Product p in cartList)
-            {
-                p.showData();
-            }
+                var product = await _context.Product
+                    .FirstOrDefaultAsync(m => m.productId == id);
 
-            // カートリストをSessionにセット
-            HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+                if (product == null)
+                {
+                    return NotFound();
+                }
 
-            // カートリストをViewDataにセット
-            ViewData["cartList"] = cartList;
+                // Sessionからカートを取得
+                if(HttpContext.Session.Get("cartList") != null)
+                {
+                    Console.WriteLine("session get");
+                    cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+                }
+                bool check = false;
+                for(int i =0; i< cartList.Count; i++)
+                {
+                    // 既にカートに同じ商品が追加されている場合
+                    if(cartList[i].productId== product.productId)
+                    {
+                        cartList.RemoveAt(i);
+                        Console.WriteLine("cart");
+                    }
+                }
+
+                foreach(Product p in cartList)
+                {
+                    p.showData();
+                }
+
+                // カートリストをSessionにセット
+                HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+
+                // カートリストをViewDataにセット
+                ViewData["cartList"] = cartList;
 
 
             return View("../Carts/index");

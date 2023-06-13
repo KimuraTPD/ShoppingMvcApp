@@ -68,7 +68,10 @@ namespace ShoppingMvcApp.Controllers
              }
              
             return View("Index");
-        }           
+        }  
+        public void LogOut(){
+            
+        }         
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
