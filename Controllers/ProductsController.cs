@@ -111,6 +111,8 @@ namespace ShoppingMvcApp.Controllers
             // カートリストをViewDataにセット
             ViewData["cartList"] = cartList;
 
+            ViewData["Message"] = "カートに追加しました。";
+
             return View("../Products/index", await _context.Product.ToListAsync());
         }
        
