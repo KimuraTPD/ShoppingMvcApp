@@ -42,6 +42,14 @@ namespace ShoppingMvcApp.Models
             this.tel =  tel;
             this.address = address;
         }
+        public User(string userName, string mail, string password , string tel, string address)
+        {
+            this.name = userName;
+            this.mail = mail;
+            this.password = password;
+            this.tel =  tel;
+            this.address = address;
+        }
 
         public User(string mail,string password){
             this.mail = mail;

@@ -45,22 +45,39 @@ namespace ShoppingMvcApp.Controllers
             ViewData["Password"] = Request.Form["pass"];
             string str_pass = Request.Form["pass"];
 
-            var db_mail  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
-           // var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
+            var db_data  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
 
-            //ユーザーIDとパスワードから電話番号/住所/名前を検索　保留
-            //  var db_name  = _context.User.Where(user => user.mail == str_mail).ToArray();
-            //  var db_tel  = _context.User.Where(user => user.mail == str_mail).ToArray();
-            //  var db_address  = _context.User.Where((user => user.address == str_mail).ToArray();
 
+           // User userTmp = new User(mail,pass);
             User user = new User(mail,pass);
             HttpContext.Session.Set("object", user.ObjectToBytes(user));
-
-             user = (User)user.ct(HttpContext.Session.Get("object"));
+            user = (User)user.ct(HttpContext.Session.Get("object"));
+             //User user = new User(user.name,mail,pass,user.tel,user.address);
              ViewData["mail"] = user.mail;
              ViewData["pass"] =  user.password;
+             ViewData["name"] = user.name;
+             ViewData["tel"] = user.tel;
+             ViewData["address"] = user.address;
+             
+                Console.WriteLine(user.mail);
+                Console.WriteLine(user.password);
+                Console.WriteLine(user.name);
+                Console.WriteLine(user.tel);
+                Console.WriteLine(user.address);
 
-             if(db_mail.Length ==1){
+                
+             Console.WriteLine("------------------------------------------");
+
+             foreach (var item in db_data)
+             {
+                 Console.WriteLine(item.mail);
+                 Console.WriteLine(item.password);
+                 Console.WriteLine(item.address);
+                 Console.WriteLine(item.tel);
+                 Console.WriteLine(item.name);
+             }
+
+             if(db_data.Length ==1){
                 Console.WriteLine("ログイン成功");
                 return View("../Products/Index", _context.Product);
              }else{
@@ -70,7 +87,16 @@ namespace ShoppingMvcApp.Controllers
             return View("Index");
         }  
         public void LogOut(){
-            
+            if(HttpContext.Session.Get("object") ==null){
+
+            }else{
+                //HttpContext.Session.Get("object") =null;
+                 //HttpContext.Session.Get("object").Clear;
+            }
+             User user = new User();
+            if(ViewData["Message"] ==""){
+
+            }
         }         
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

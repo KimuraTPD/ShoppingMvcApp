@@ -36,6 +36,9 @@ namespace ShoppingMvcApp.Controllers
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
+                ViewData["name"] = user.name;
+                ViewData["tel"] = user.tel;
+                ViewData["address"] = user.address;
                 if(HttpContext.Session.Get("cartList") != null)
                 {
                     cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
@@ -71,6 +74,9 @@ namespace ShoppingMvcApp.Controllers
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
+                ViewData["name"] = user.name;
+                ViewData["tel"] = user.tel;
+                ViewData["address"] = user.address;
             }else{
                  ViewData["Message"] = "ログインしてください。"; 
             }

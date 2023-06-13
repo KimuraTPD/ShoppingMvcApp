@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingMvcApp.Models;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShoppingMvcApp.Controllers
 {
@@ -21,6 +26,15 @@ namespace ShoppingMvcApp.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            if(HttpContext.Session.Get("object") != null){
+                User user = new User(); 
+                user = (User)user.ct(HttpContext.Session.Get("object"));
+                ViewData["mail"] = user.mail;
+                ViewData["pass"] =  user.password;
+                ViewData["name"] = user.name;
+                ViewData["tel"] = user.tel;
+                ViewData["address"] = user.address;
+            }
             return View(await _context.User.ToListAsync());
         }
 

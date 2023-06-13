@@ -1,33 +1,19 @@
 @model IEnumerable<ShoppingMvcApp.Models.User>
 
 @{
-    ViewData["Title"] = "会員登録";
+    ViewData["Title"] = "会員情報";
 }
 
-<!-- <h1>Index</h1> -->
+<h1>会員情報</h1>
 
 <p>
-    <a asp-action="Create">会員登録</a>
+    <!-- <a asp-action="Create">会員登録</a> -->
 </p>
-<!-- <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.address)
-            </th>
-            <th></th>
-        </tr>
-    </thead> 
-<tbody>-->
+
+<div class="text-center">
+    <p>名前:@ViewData["name"]</p>
+    <p>ログインID(メールアドレス):@ViewData["mail"]</p>
+    <p>パスワード:@ViewData["password"]</p>
+    <p>電話番号:@ViewData["tel"]</p>
+    <p>住所:@ViewData["address"]</p>
+</div>
