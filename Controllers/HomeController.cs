@@ -45,8 +45,8 @@ namespace ShoppingMvcApp.Controllers
             ViewData["Password"] = Request.Form["pass"];
             string str_pass = Request.Form["pass"];
 
-            var db_mail  = _context.User.Where(user => user.mail == str_mail).ToArray();
-            var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
+            var db_mail  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
+           // var db_pass  = _context.User.Where(user => user.password == str_pass).ToArray();
 
             //ユーザーIDとパスワードから電話番号/住所/名前を検索　保留
             //  var db_name  = _context.User.Where(user => user.mail == str_mail).ToArray();
@@ -59,27 +59,13 @@ namespace ShoppingMvcApp.Controllers
              user = (User)user.ct(HttpContext.Session.Get("object"));
              ViewData["mail"] = user.mail;
              ViewData["pass"] =  user.password;
-    
-            foreach (var item in db_mail)
-            {
-                if(item.mail == str_mail){
-                    foreach(var item2 in db_pass){
-                        if(item2.password == str_pass){
-                            Console.WriteLine("ログイン成功");
-                            return View("../Products/Index", _context.Product);
-                        }else{
-                            Console.WriteLine("パスワードが違います。");
-                            Console.WriteLine("ログイン失敗");
-                             return View("Index");
-                        }
-                    }
-                   
-                }else{
-                    Console.WriteLine("ログインIDがありません。");
-                    Console.WriteLine("ログイン失敗");
-                    return View("Index");
-                }
-            }
+
+             if(db_mail.Length ==1){
+                Console.WriteLine("ログイン成功");
+                return View("../Products/Index", _context.Product);
+             }else{
+                 Console.WriteLine("ログイン失敗");
+             }
              
             return View("Index");
         }           
