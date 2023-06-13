@@ -8,7 +8,7 @@
 <h1>カート</h1>
 
 <p>
-    <a asp-action="Edit">Edit</a>
+    <!-- <a asp-action="Edit">Edit</a> -->
 </p>
 <table class="table">
     <thead>
@@ -42,6 +42,11 @@
             </td>
             <td>
                 @item.count
+            </td>
+            <td>
+                 <form asp-controller="Carts" asp-action="DeleteCart" asp-route-id="@item.productId" method="POST">
+                    <input type="submit" value="カートから削除" class="btn btn-primary">
+                </Form>
             </td>
         </tr>
         }
