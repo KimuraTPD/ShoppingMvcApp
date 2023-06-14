@@ -15,4 +15,6 @@ using ShoppingMvcApp.Models;
         public DbSet<ShoppingMvcApp.Models.Product> Product { get; set; }
 
         public DbSet<ShoppingMvcApp.Models.User> User { get; set; }
+
+        public DbSet<ShoppingMvcApp.Models.PurchaseHistory> PurchaseHistory { get; set; }
     }

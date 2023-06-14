@@ -1,0 +1,36 @@
+@model ShoppingMvcApp.Models.PurchaseHistory
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PurchaseHistory</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.detailsId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.detailsId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.count)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.count)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.purchaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.purchaseDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PurchaseHistoryId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

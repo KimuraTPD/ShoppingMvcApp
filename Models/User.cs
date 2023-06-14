@@ -27,7 +27,8 @@ namespace ShoppingMvcApp.Models
         public string password { get; set; }
         public string tel { get; set; }
         public string address { get; set; }
-        // public List<Product> buyList { get; set; }
+        [Display(Name="購入履歴")]
+        public ICollection<PurchaseHistory> purchaseHistorys { get; set;}
 
         public User(){
 

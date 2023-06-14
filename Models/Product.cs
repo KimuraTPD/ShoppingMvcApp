@@ -23,6 +23,7 @@ namespace ShoppingMvcApp.Models
         public string image_url { get; set; }
         [Display(Name="個数")]
         public int count { get; set; }
+         public ICollection<PurchaseHistory> purchaseHistorys { get; set;}
 
 
         public Product() { }
