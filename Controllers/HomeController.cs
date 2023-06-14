@@ -46,36 +46,18 @@ namespace ShoppingMvcApp.Controllers
             string str_pass = Request.Form["pass"];
 
             var db_data  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
+ 
+                
+            
+           User userTmp = new User();
+           this.GetDbData(db_data,userTmp);
 
+            User user = new User(userTmp.name,userTmp.mail,userTmp.password,userTmp.tel,userTmp.address);           
 
-           // User userTmp = new User(mail,pass);
-            User user = new User(mail,pass);
             HttpContext.Session.Set("object", user.ObjectToBytes(user));
             user = (User)user.ct(HttpContext.Session.Get("object"));
-             //User user = new User(user.name,mail,pass,user.tel,user.address);
-             ViewData["mail"] = user.mail;
-             ViewData["pass"] =  user.password;
-             ViewData["name"] = user.name;
-             ViewData["tel"] = user.tel;
-             ViewData["address"] = user.address;
-             
-                Console.WriteLine(user.mail);
-                Console.WriteLine(user.password);
-                Console.WriteLine(user.name);
-                Console.WriteLine(user.tel);
-                Console.WriteLine(user.address);
 
-                
-             Console.WriteLine("------------------------------------------");
-
-             foreach (var item in db_data)
-             {
-                 Console.WriteLine(item.mail);
-                 Console.WriteLine(item.password);
-                 Console.WriteLine(item.address);
-                 Console.WriteLine(item.tel);
-                 Console.WriteLine(item.name);
-             }
+            //Console.WriteLine(ViewData["tel"]);
 
              if(db_data.Length ==1){
                 Console.WriteLine("ログイン成功");
@@ -86,7 +68,22 @@ namespace ShoppingMvcApp.Controllers
              
             return View("Index");
         }  
-
+        private void GetDbData(User[] db_data,User user){
+            User tmp;
+            foreach (var item in db_data)
+             {
+                user.mail = item.mail;
+                ViewData["mail"] = user.mail;
+                user.password = item.password;
+                ViewData["pass"] = user.password;
+                user.name = item.name;
+                ViewData["name"] = user.name;
+                user.tel = item.tel;
+                ViewData["tel"] = user.tel;
+                user.address = item.address;
+                ViewData["address"] = user.address;
+             }
+        }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,7 +1,7 @@
 ﻿@{
     var userName="";
-    if(ViewData["mail"]!= null){
-        userName = ViewData["mail"].ToString();
+    if(ViewData["name"]!= null){
+        userName = ViewData["name"].ToString() +"さん";
     }else{
         userName = "ログインしてください";
         

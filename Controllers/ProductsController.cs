@@ -52,21 +52,62 @@ namespace ShoppingMvcApp.Controllers
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
+                ViewData["name"] = user.name;
+                ViewData["tel"] = user.tel;
+                ViewData["address"] = user.address;
+               // this.GetDbData(db_data,user);
             }
-            //  ViewData["mail"] = user.mail;
-            //  ViewData["pass"] =  user.password;
+
             return View(await _context.Product.ToListAsync());
+        }
+        private void GetDbData(User[] db_data,User user){
+            User tmp;
+             for(int i =1; i< db_data.Length;i++){
+                 switch (i){
+                     case 1:
+                          tmp =db_data[i-1];
+                        user.mail = tmp.ToString();
+                        ViewData["mail"] = user.mail;
+                        break;
+                    case 2:
+                        // user.password = db_data[i-1].ToString;
+                         tmp =db_data[i-1];
+                        user.password =  tmp.ToString();
+                        ViewData["pass"] =  user.password;
+                        break;
+                    case 3:
+                        // user.name = db_data[i-1].ToString;
+                        tmp =db_data[i-1];
+                        user.name =  tmp.ToString();
+                        ViewData["name"] = user.name;
+                        break;
+                    case 4:
+                        // user.tel = db_data[i-1].ToString;
+                        tmp =db_data[i-1];
+                        user.tel =  tmp.ToString();
+                        ViewData["tel"] = user.tel;
+                        break;
+                    case 5:
+                        // user.address = db_data[i-1].ToString;
+                        tmp =db_data[i-1];
+                        user.address =  tmp.ToString();
+                        ViewData["address"] = user.address;
+                        break;
+                 }
+             }
         }
 
         // カートに入れる
         public async Task<IActionResult> AddCart(int? id, int count)
         {
-            if(HttpContext.Session.Get("object") != null)
-            {
+            if(HttpContext.Session.Get("object") != null){
                 User user = new User(); 
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
+                ViewData["name"] = user.name;
+                ViewData["tel"] = user.tel;
+                ViewData["address"] = user.address;
                 Console.WriteLine("count = " + count);
 
                 if (id == null)
@@ -76,57 +117,50 @@ namespace ShoppingMvcApp.Controllers
 
                 var product = await _context.Product
                     .FirstOrDefaultAsync(m => m.productId == id);
-                // 個数が1以上の場合
-                if(count >= 1)
+                product.count = count;
+                if (product == null)
                 {
-                    product.count = count;
-                    if (product == null)
-                    {
-                        return NotFound();
-                    }
-
-                    // Sessionからカートを取得
-                    if(HttpContext.Session.Get("cartList") != null)
-                    {
-                        cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
-                    }
-                    bool check = false;
-                    foreach(var item in cartList)
-                    {
-                        // 既にカートに同じ商品が追加されている場合
-                        if(item.productId == product.productId)
-                        {
-                            check = true;
-                            // カート内の商品のカウントに加算
-                            item.count += product.count;
-                        }
-                    }
-                    // カート内に同じ商品が追加されていない場合
-                    if(!check)
-                    {
-                        // カートリストに追加
-                        cartList.Add(product);
-                    }
-
-                    foreach(Product p in cartList)
-                    {
-                        p.showData();
-                    }
-
-                    // カートリストをSessionにセット
-                    HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
-
-                    // カートリストをViewDataにセット
-                    ViewData["cartList"] = cartList;
-
-                    ViewData["Message"] = "カートに追加しました。";
-                    ViewData["cartList"] = cartList;
-                }else{
-                    ViewData["Message"] = "個数を1以上選択してください。";
-
+                    return NotFound();
                 }
-            }else {
-                ViewData["Message"] = "ログインしてください。";  
+
+                // Sessionからカートを取得
+                if(HttpContext.Session.Get("cartList") != null)
+                {
+                    cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+                }
+                bool check = false;
+                foreach(var item in cartList)
+                {
+                    // 既にカートに同じ商品が追加されている場合
+                    if(item.productId == product.productId)
+                    {
+                        check = true;
+                        // カート内の商品のカウントに加算
+                        item.count += product.count;
+                    }
+                }
+                // カート内に同じ商品が追加されていない場合
+                if(!check)
+                {
+                    // カートリストに追加
+                    cartList.Add(product);
+                }
+
+                foreach(Product p in cartList)
+                {
+                    p.showData();
+                }
+
+                // カートリストをSessionにセット
+                HttpContext.Session.Set("cartList",ObjectToBytes(cartList));
+
+                // カートリストをViewDataにセット
+                ViewData["cartList"] = cartList;
+
+                ViewData["Message"] = "カートに追加しました。";
+                    ViewData["cartList"] = cartList;
+            }else{
+                ViewData["Message"] = "ログインしてください。";     
             }
             return View("../Products/index", await _context.Product.ToListAsync());
         }
