@@ -174,13 +174,13 @@ namespace ShoppingMvcApp.Controllers
             if(HttpContext.Session.Get("object") ==null){
 
             }else{
-                //HttpContext.Session.Get("object") =null;
-                 //HttpContext.Session.Get("object").Clear;
+                HttpContext.Session.Remove("object");
+                ViewData["Message"] = "ログアウトしました"
             }
-             User user = new User();
-            if(ViewData["Message"] ==""){
-                    ViewData["Message"] = "ログアウトしました";
-            }
+            //  User user = new User();
+            // if(ViewData["Message"] ==""){
+            //         ViewData["Message"] = "ログアウトしました";
+            // }
            return View("../Home/Index");
            //return RedirectToAction("../Home/Index");
         }         
