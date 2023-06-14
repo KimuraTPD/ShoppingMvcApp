@@ -14,7 +14,9 @@
 <p>
     @if(cartList.Count <= 0){
         <Text>カートに商品がありません</Text>
+        <br>
     }
+    @ViewData["EmptyCartMessage"]
     <!-- <a asp-action="Edit">Edit</a> -->
 </p>
 <table class="table">

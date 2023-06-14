@@ -80,6 +80,17 @@ namespace ShoppingMvcApp.Controllers
             }else{
                  ViewData["Message"] = "ログインしてください。"; 
             }
+            // Sessionにカートリストが存在する場合
+            if(HttpContext.Session.Get("cartList") != null)
+            {
+                cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+            }
+            // Sessionにカートリストが存在しない、またはカートリストが空の場合
+            if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
+                ViewData["cartList"] = cartList;
+                ViewData["EmptyCartMessage"] = "カートに商品を入れて、「注文確定」ボタンを押下してください。";
+                return View("Index");
+            }
             return View("../Carts/Ordered");
         }
 
