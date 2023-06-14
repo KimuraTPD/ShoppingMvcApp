@@ -86,18 +86,7 @@ namespace ShoppingMvcApp.Controllers
              
             return View("Index");
         }  
-        public void LogOut(){
-            if(HttpContext.Session.Get("object") ==null){
 
-            }else{
-                //HttpContext.Session.Get("object") =null;
-                 //HttpContext.Session.Get("object").Clear;
-            }
-             User user = new User();
-            if(ViewData["Message"] ==""){
-
-            }
-        }         
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

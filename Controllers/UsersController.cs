@@ -167,5 +167,20 @@ namespace ShoppingMvcApp.Controllers
         {
             return _context.User.Any(e => e.userId == id);
         }
+
+        public IActionResult LogOut(){
+            if(HttpContext.Session.Get("object") ==null){
+
+            }else{
+                //HttpContext.Session.Get("object") =null;
+                 //HttpContext.Session.Get("object").Clear;
+            }
+             User user = new User();
+            if(ViewData["Message"] ==""){
+                    ViewData["Message"] = "ログアウトしました";
+            }
+           return View("../Home/Index");
+           //return RedirectToAction("../Home/Index");
+        }         
     }
 }
