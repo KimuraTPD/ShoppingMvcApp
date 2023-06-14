@@ -78,7 +78,9 @@ namespace ShoppingMvcApp.Controllers
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // ../が使えない    メソッドや変数名のみ利用可？
+                // return RedirectToAction(nameof(Index));
+                return View("../Home/Index");
             }
             return View(user);
         }

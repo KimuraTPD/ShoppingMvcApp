@@ -1,12 +1,11 @@
 @model ShoppingMvcApp.Models.User
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "ユーザー登録";
 }
 
-<h1>Create</h1>
+<h1>ユーザー登録</h1>
 
-<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,7 +17,7 @@
                 <span asp-validation-for="name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="mail" class="control-label">>メールアドレス</label>
+                <label asp-for="mail" class="control-label">メールアドレス</label>
                 <input asp-for="mail" class="form-control" />
                 <span asp-validation-for="mail" class="text-danger"></span>
             </div>
@@ -38,7 +37,7 @@
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="登録" class="btn btn-primary" />
             </div>
         </form>
     </div>
