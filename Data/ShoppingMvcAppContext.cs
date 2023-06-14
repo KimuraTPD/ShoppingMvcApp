@@ -17,4 +17,6 @@ using ShoppingMvcApp.Models;
         public DbSet<ShoppingMvcApp.Models.User> User { get; set; }
 
         public DbSet<ShoppingMvcApp.Models.PurchaseHistory> PurchaseHistory { get; set; }
+
+        public DbSet<ShoppingMvcApp.Models.InvestoryControl> InvestoryControl { get; set; }
     }

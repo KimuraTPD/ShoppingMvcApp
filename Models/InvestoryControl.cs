@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ShoppingMvcApp.Models
 {
     [Serializable]
-    public class InvestoryControll
+    public class InvestoryControl
     {
         // 購入履歴ID
         [Key]
@@ -17,7 +17,7 @@ namespace ShoppingMvcApp.Models
         [Display(Name="在庫数")]
         public string InvestoryAmount { get; set; }
 
-        public InvestoryControll(){}
+        public InvestoryControl(){}
 
         public void showData()
         {
