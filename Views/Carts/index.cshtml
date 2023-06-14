@@ -3,11 +3,18 @@
 @{
     ViewData["Title"] = "カート";
     List<Product> cartList = (List<Product>)ViewData["cartList"];
+    int total = 0;
+    foreach(var p in cartList){
+        total += (p.price * p.count);
+    }
 }
 
 <h1>カート</h1>
 
 <p>
+    @if(cartList.Count <= 0){
+        <Text>カートに商品がありません</Text>
+    }
     <!-- <a asp-action="Edit">Edit</a> -->
 </p>
 <table class="table">
@@ -24,6 +31,9 @@
             <th>
                @Html.DisplayNameFor(model => model.count) 
             </th>
+            <th>
+                小計
+            </th>
             </th>
             <th></th>
         </tr>
@@ -32,7 +42,7 @@
         @foreach (var item in cartList) {
         <tr>
             <td>
-                <img src=@item.image_url width="40" height="40">
+                <img src=@item.image_url width="80" height="80">
             </td>
             <td>
                 @item.productName
@@ -44,6 +54,12 @@
                 @item.count
             </td>
             <td>
+                @{
+                    int subTotal = item.price * item.count;
+                    <Text>@subTotal 円</Text>
+                }
+            </td>
+            <td>
                  <form asp-controller="Carts" asp-action="DeleteCart" asp-route-id="@item.productId" method="POST">
                     <input type="submit" value="カートから削除" class="btn btn-primary">
                 </Form>
@@ -53,6 +69,7 @@
     </tbody>
     <tbody>
     <div class="text-right">
+        <span style="font-size: 30px">合計金額： @total</span>
         <form method="post" asp-controller="Carts" asp-action="OrderedPage">
             <div class="form-group">
                 <input type="submit" value = "注文確定" class="btn btn-primary"  />
