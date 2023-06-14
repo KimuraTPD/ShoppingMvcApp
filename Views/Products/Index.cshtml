@@ -18,6 +18,30 @@
         </form>
     </div>
 </p>
+<div>キーワード</div>
+    <form asp-controller="Products" asp-action="Find">
+        <div>
+            <input type="text" name="find" />
+            <input type="submit" value="検索" />
+        </div>
+    </form>
+<div>価格：下限～上限</div>
+    <li style="display:inline-block"> 
+        <form asp-controller="Products" asp-action="FindPrice">
+                <input type="number" name="lower" style="width:30%" /> ～
+                <input type="number" name="upper" style="width:30%" />
+                <input type="submit" value="検索" />
+        </form>
+    </li>
+    <li style="display:inline-block">
+        <form asp-controller="Products" asp-action="OrderBy">
+                <select name="orderBy" style="height: 30px">
+                    <option value=0>昇順</option>
+                    <option value=1>降順</option>
+                    <input type="submit" value="並び替え">
+                </select>
+        </form>
+    </li>
 <table class="table">
     <thead>
         <tr>

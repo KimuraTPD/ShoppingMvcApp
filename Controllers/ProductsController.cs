@@ -164,6 +164,41 @@ namespace ShoppingMvcApp.Controllers
             }
             return View("../Products/index", await _context.Product.ToListAsync());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Find(string find)
+        {
+            // var products = await _context.Product.Where(m => m.productName == find).ToListAsync();
+            var products = from p in _context.Product select p;
+            products = products.Where(s => s.productName.Contains(find));
+            return View("Index", products);
+        }
+
+                [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FindPrice(int upper, int lower)
+        {
+            if(upper == 0){
+                upper = int.MaxValue;
+            }
+            Console.WriteLine("下限～上限：" + lower + "～" + upper);
+            // var products = await _context.Product.Where(m => m.productName == find).ToListAsync();
+            var products = from p in _context.Product select p;
+            products = products.Where(s => s.price >= lower && s.price <= upper);
+            return View("Index", products);
+        }
+        public async Task<IActionResult> OrderBy(int orderBy)
+        {
+            var products = from p in _context.Product select p;
+            if(orderBy == 0)
+            {
+                products = products.OrderBy(p => p.price);
+            }else if(orderBy == 1){
+                products = products.OrderByDescending(p => p.price);
+            }
+            return View("Index", products);
+        }
        
 
         public static byte[] ObjectToBytes(Object ob)
