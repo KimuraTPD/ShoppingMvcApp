@@ -9,8 +9,6 @@ using ShoppingMvcApp.Models;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace ShoppingMvcApp.Controllers
 {

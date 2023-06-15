@@ -14,7 +14,7 @@ namespace ShoppingMvcApp.Models
         [Key]
         [Display(Name="購入履歴ID")]
         public int PurchaseHistoryId { get; set; }
-        [Display(Name="明細ID")]
+        [Display(Name="明細番号")]
         public int detailsId { get; set; }
         [Display(Name="ユーザーID")]
         public int userId { get; set; }

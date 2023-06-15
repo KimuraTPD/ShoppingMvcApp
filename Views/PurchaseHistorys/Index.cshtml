@@ -4,28 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>マイページ</h1>
+<h1>購入履歴</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                明細番号
+                @Html.DisplayNameFor(model => model.purchaseHistory.detailsId)
             </th>
             <th>
-                商品画像
+                @Html.DisplayNameFor(model => model.product.image_url)
             </th>
             <th>
-                商品名
+                @Html.DisplayNameFor(model => model.product.productName) 
             </th>
             <th>
-                購入数
+                @Html.DisplayNameFor(model => model.product.price)
             </th>
             <th>
-                購入日時
+                @Html.DisplayNameFor(model => model.purchaseHistory.count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.purchaseHistory.purchaseDate)
             </th>
             <th></th>
         </tr>
@@ -43,6 +43,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.product.productName)                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product.price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.purchaseHistory.count)

@@ -114,6 +114,7 @@ namespace ShoppingMvcApp.Controllers
                 PurchaseHistorysController phc = new PurchaseHistorysController(_context);
                 await phc.CreatePurchaseHistory(user.userId, cartList);
 
+                ViewData["afterCartList"] = cartList;
                 // カートを空にする
                 cartList = new List<Product>();
                 HttpContext.Session.Set("cartList", ObjectToBytes(cartList));               

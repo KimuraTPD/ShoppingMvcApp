@@ -1,8 +1,68 @@
+@model IEnumerable<ShoppingMvcApp.Models.Product>
+@using ShoppingMvcApp.Models;
 @{
     ViewData["Title"] = "注文確定";
+    List<Product> cartList = (List<Product>)ViewData["afterCartList"];
+    if(cartList== null){
+        cartList = new List<Product>();
+    }
+    int total = 0;
+    foreach(var p in cartList){
+        total += (p.price * p.count);
+    }
 }
 
 <div class="text-center">
     <p>注文確定しました。</p>
-
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.image_url) 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productName) 
+            </th>
+            <th>
+               @Html.DisplayNameFor(model => model.price) 
+            <th>
+               @Html.DisplayNameFor(model => model.count) 
+            </th>
+            <th>
+                小計
+            </th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in cartList) {
+        <tr>
+            <td>
+                <img src=@item.image_url width="80" height="80">
+            </td>
+            <td>
+                @item.productName
+            </td>
+            <td>
+                @item.price
+            </td>
+            <td>
+                @item.count
+            </td>
+            <td>
+                @{
+                    int subTotal = item.price * item.count;
+                    <Text>@subTotal 円</Text>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tbody>
+    <div class="text-right">
+        <span style="font-size: 30px">合計金額： @total</span>
+    </div>
+    </tbody>
+</table>
