@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "ショッピングサイト";
+    string pt ="/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/";
+
 }
 
 <div class="text-center">
@@ -9,15 +11,17 @@
         <div class="form-group">
              <p></p>
             <label for="mail">ログインID(メールアドレス)</label>
-            <input type="text" name="mail" id="mail" class="form-control" required />
+            <input type="text" name="mail" id="mail" class="form-control" required pattern= @pt
+                     title="メールアドレスは、info@example.com のような形式で記入してください。" placeholder="info@example.com"  />
         </div>
         <div class="form-group">
             <label for="mail">パスワード</label>
-            <input type="password" name="pass" id="pass" class="form-control" maxlength="10" pattern="[a-zA-Z0-9]+" title="パスワードは半角英数字で入力してください。" required />
+            <input type="password" name="pass" id="pass" class="form-control" minlength="4" maxlength="12" pattern="[a-zA-Z0-9]+" 
+                            placeholder="パスワードは半角英数字で入力してください。" required />
         </div>
         <div class="form-group">
             <input type="submit" value = "ログイン" class="btn btn-primary"  />
-           <!-- <p>@ViewData["object"]</p> -->
+           <p>@ViewData["LoginResult"]</p>
         </div>
     </form>
 

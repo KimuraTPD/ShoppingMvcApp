@@ -60,9 +60,11 @@ namespace ShoppingMvcApp.Controllers
 
             if(db_data.Length ==1){
                 Console.WriteLine("ログイン成功");
+                ViewData["LoginResult"] = "ログイン成功";
                 return View("../Products/Index", _context.Product);
             }else{
                 Console.WriteLine("ログイン失敗");
+                ViewData["LoginResult"] = "ログイン失敗";
             }
              
             return View("Index");
