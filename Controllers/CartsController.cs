@@ -73,6 +73,7 @@ namespace ShoppingMvcApp.Controllers
         public async Task<IActionResult> OrderedPage(){
             User user = new User(); 
             if(HttpContext.Session.Get("object") != null){
+                
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
@@ -86,28 +87,40 @@ namespace ShoppingMvcApp.Controllers
             if(HttpContext.Session.Get("cartList") != null)
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
-                // _context.Database.ExecuteSqlCommand("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
-                //_context.Database.SqlQuery<string>("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
+
+                //在庫管理の処理追加
                 var icList = await _context.InvestoryControl.ToListAsync();
                 foreach(var product in cartList){
                     foreach(var ic in icList){
+                            Console.WriteLine("2:" +ic.InvestoryAmount);
+                            Console.WriteLine("2:" +product.count);
                         if(product.productId == ic.productId){
-                            ic.InvestoryAmount =ic.InvestoryAmount - product.count;
-                            _context.Update(ic);
+                            Console.WriteLine("3:" +ic.InvestoryAmount);
+                            Console.WriteLine("3:" +product.count);
+                            if(ic.InvestoryAmount >= product.count && ic.InvestoryAmount -product.count>= 0){
+                                ic.InvestoryAmount =ic.InvestoryAmount - product.count;
+                                _context.Update(ic);
+                                 await _context.SaveChangesAsync();
+                            }else{
+                                Console.WriteLine("在庫なし");
+                                ViewData["investryMsg"] = "在庫がありません";
+                                return View("../Carts/Index");
+                            }
                         }
                     }
                 }
-                await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync();
 
                 PurchaseHistorysController phc = new PurchaseHistorysController(_context);
                 await phc.CreatePurchaseHistory(user.userId, cartList);
 
                 // カートを空にする
                 cartList = new List<Product>();
-                HttpContext.Session.Set("cartList", ObjectToBytes(cartList));
-
+                HttpContext.Session.Set("cartList", ObjectToBytes(cartList));               
+                 
+            
+            // Sessionにカートリストが存在しない、またはカートリストが空の場合
             }else if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
-                // Sessionにカートリストが存在しない、またはカートリストが空の場合
                 ViewData["cartList"] = cartList;
                 ViewData["EmptyCartMessage"] = "カートに商品を入れて、「注文確定」ボタンを押下してください。";
                 return View("Index");

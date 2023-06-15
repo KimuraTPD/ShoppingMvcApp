@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "カート";
     List<Product> cartList = (List<Product>)ViewData["cartList"];
+    if(cartList== null){
+        cartList = new List<Product>();
+    }
     int total = 0;
     foreach(var p in cartList){
         total += (p.price * p.count);
@@ -17,6 +20,7 @@
         <br>
     }
     @ViewData["EmptyCartMessage"]
+    @ViewData["investryMsg"]
     <!-- <a asp-action="Edit">Edit</a> -->
 </p>
 <table class="table">
