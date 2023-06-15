@@ -55,46 +55,9 @@ namespace ShoppingMvcApp.Controllers
                 ViewData["name"] = user.name;
                 ViewData["tel"] = user.tel;
                 ViewData["address"] = user.address;
-               // this.GetDbData(db_data,user);
             }
 
             return View(await _context.Product.ToListAsync());
-        }
-        private void GetDbData(User[] db_data,User user){
-            User tmp;
-             for(int i =1; i< db_data.Length;i++){
-                 switch (i){
-                     case 1:
-                          tmp =db_data[i-1];
-                        user.mail = tmp.ToString();
-                        ViewData["mail"] = user.mail;
-                        break;
-                    case 2:
-                        // user.password = db_data[i-1].ToString;
-                         tmp =db_data[i-1];
-                        user.password =  tmp.ToString();
-                        ViewData["pass"] =  user.password;
-                        break;
-                    case 3:
-                        // user.name = db_data[i-1].ToString;
-                        tmp =db_data[i-1];
-                        user.name =  tmp.ToString();
-                        ViewData["name"] = user.name;
-                        break;
-                    case 4:
-                        // user.tel = db_data[i-1].ToString;
-                        tmp =db_data[i-1];
-                        user.tel =  tmp.ToString();
-                        ViewData["tel"] = user.tel;
-                        break;
-                    case 5:
-                        // user.address = db_data[i-1].ToString;
-                        tmp =db_data[i-1];
-                        user.address =  tmp.ToString();
-                        ViewData["address"] = user.address;
-                        break;
-                 }
-             }
         }
 
         // カートに入れる

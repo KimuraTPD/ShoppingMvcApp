@@ -21,11 +21,13 @@ namespace ShoppingMvcApp.Controllers
         private ShoppingMvcAppContext _context;
 
         public List<Product> cartList = new List<Product>();
+        InvestoryControl ivc = new InvestoryControl();
 
         public CartsController(ShoppingMvcAppContext context)
         {
             _context = context;
             //User user = new User();
+            
         }
 
         public IActionResult Index()
@@ -68,7 +70,7 @@ namespace ShoppingMvcApp.Controllers
             return View();
         }
 
-        public IActionResult OrderedPage(){
+        public async Task<IActionResult> OrderedPage(){
             if(HttpContext.Session.Get("object") != null){
                 User user = new User(); 
                 user = (User)user.ct(HttpContext.Session.Get("object"));
@@ -84,6 +86,23 @@ namespace ShoppingMvcApp.Controllers
             if(HttpContext.Session.Get("cartList") != null)
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+
+                //在庫管理の処理追加
+                int id = 1;
+                
+                // _context.Database.ExecuteSqlCommand("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
+                //_context.Database.SqlQuery<string>("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
+                var icList = _context.InvestoryControl.ToArray();
+                foreach(var product in cartList){
+                    foreach(var ic in icList){
+                        if(product.productId == ic.productId){
+                            ic.InvestoryAmount =ic.InvestoryAmount - product.count;
+                            _context.Update(ic);
+                        }
+                    }
+                }
+                await _context.SaveChangesAsync();
+                 
             }
             // Sessionにカートリストが存在しない、またはカートリストが空の場合
             if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){

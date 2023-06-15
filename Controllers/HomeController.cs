@@ -9,6 +9,7 @@ using ShoppingMvcApp.Models;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 // using Microsoft.AspNetCore.Authorization;
 
@@ -46,8 +47,6 @@ namespace ShoppingMvcApp.Controllers
             string str_pass = Request.Form["pass"];
 
             var db_data  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
- 
-                
             
            User userTmp = new User();
            this.GetDbData(db_data,userTmp);

@@ -15,7 +15,7 @@ namespace ShoppingMvcApp.Models
         [Display(Name="商品ID")]
         public int productId { get; set; }
         [Display(Name="在庫数")]
-        public string InvestoryAmount { get; set; }
+        public int InvestoryAmount { get; set; }
 
         public InvestoryControl(){}
 

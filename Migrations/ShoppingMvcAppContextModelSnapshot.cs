@@ -21,8 +21,8 @@ namespace ShoppingMvcApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("InvestoryAmount")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("InvestoryAmount")
+                        .HasColumnType("int");
 
                     b.HasKey("productId");
 

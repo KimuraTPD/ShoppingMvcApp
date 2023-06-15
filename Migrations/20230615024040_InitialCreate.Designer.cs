@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ShoppingMvcApp.Migrations
 {
     [DbContext(typeof(ShoppingMvcAppContext))]
-    [Migration("20230614073654_InvestoryControlCreate")]
-    partial class InvestoryControlCreate
+    [Migration("20230615024040_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,8 @@ namespace ShoppingMvcApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("InvestoryAmount")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("InvestoryAmount")
+                        .HasColumnType("int");
 
                     b.HasKey("productId");
 

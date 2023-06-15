@@ -6,12 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingMvcApp.Models;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoppingMvcApp.Controllers
 {
     public class InvestoryControlsController : Controller
     {
         private readonly ShoppingMvcAppContext _context;
+        public List<Product> cartList = new List<Product>();
 
         public InvestoryControlsController(ShoppingMvcAppContext context)
         {
@@ -40,6 +44,14 @@ namespace ShoppingMvcApp.Controllers
             }
 
             return View(investoryControl);
+        }
+
+        public void UpdateInvestory(){
+        //仮
+            // if(HttpContext.Session.Get("cartList") != null){
+            //     cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
+
+            // }
         }
 
         // GET: InvestoryControls/Create
