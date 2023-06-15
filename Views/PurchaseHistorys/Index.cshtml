@@ -1,4 +1,4 @@
-@model IEnumerable<ShoppingMvcApp.Models.PurchaseHistory>
+@model IEnumerable<ShoppingMvcApp.Models.JoinTables>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.detailsId)
+                明細番号
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.productId)
+                商品画像
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.count)
+                商品名
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.purchaseDate)
+                購入数
+            </th>
+            <th>
+                購入日時
             </th>
             <th></th>
         </tr>
@@ -31,21 +34,38 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.detailsId)
+                @Html.DisplayFor(modelItem => item.purchaseHistory.detailsId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.productId)
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.product.productId">
+                    <img src=@item.product.image_url width="80" height="80">
+                </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.count)
+                @Html.DisplayFor(modelItem => item.product.productName)                
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.purchaseDate)
+                @Html.DisplayFor(modelItem => item.purchaseHistory.count)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PurchaseHistoryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PurchaseHistoryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PurchaseHistoryId">Delete</a>
+                @Html.DisplayFor(modelItem => item.purchaseHistory.purchaseDate)
+            </td>
+            <td>
+              <form asp-controller="Products" asp-action="AddCart" asp-route-id="@item.product.productId" method="POST">
+                    <select name="count">
+                        <option value=0 selected>0</option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                        <option value=6>6</option>
+                        <option value=7>7</option>
+                        <option value=8>8</option>
+                        <option value=9>9</option>               
+                    </select>
+                    <input type="submit" value="カートに入れる" class="btn btn-primary">
+                </Form>
             </td>
         </tr>
 }

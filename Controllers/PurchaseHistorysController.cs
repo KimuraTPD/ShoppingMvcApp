@@ -71,7 +71,16 @@ namespace ShoppingMvcApp.Controllers
                  ViewData["Message"] = "ログインしてください。"; 
             }
             var phList = await _context.PurchaseHistory.Where(ph => ph.userId == user.userId).OrderByDescending(ph => ph.detailsId).ToListAsync();
-            return View(phList);
+            var list = await _context.PurchaseHistory.Where(ph1 => ph1.userId == user.userId).OrderByDescending(ph => ph.detailsId)
+            .Join( _context.Product,
+            ph => ph.productId,
+            p => p.productId,
+            (ph, p) => new JoinTables {
+                product = p, purchaseHistory = ph
+            }
+            ).ToListAsync();
+            ViewData["historyList"] = list;
+            return View(list);
         }
 
         // GET: PurchaseHistorys/Details/5
