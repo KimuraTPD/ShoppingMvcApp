@@ -14,10 +14,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 using ShoppingMvcApp.Models;
 
+using System.Text.RegularExpressions;
+
 namespace ShoppingMvcApp.Models
 {
     [Serializable]
-    public  class User
+    public  class User :IValidatableObject
     {
           // ユーザーID
         [Key]
@@ -79,6 +81,39 @@ namespace ShoppingMvcApp.Models
                 ms.Write(arr, 0, arr.Length);
                 ms.Seek(0, SeekOrigin.Begin);
                 return (Object)bf.Deserialize(ms);
+            }
+
+            //入力チェック
+            public IEnumerable<ValidationResult> Validate(ValidationContext validationContext){
+                if(name ==null){
+                    yield return new ValidationResult ("名前は必須項目");
+                }
+                if(mail == null){
+                    yield return new ValidationResult ("メールアドレスは必須項目");
+                }else{
+                    if(mail != null && !Regex.IsMatch(mail,"[a-zA-Z0-9.+-_%]+@[a-zA-Z0-9.-]+")){
+                        yield return new ValidationResult ("メールアドレスは形式に従ってください");
+                    }
+                }
+               
+                if(password ==null){
+                    yield return new ValidationResult ("パスワードは必須項目");
+                }else{
+                    if(!Regex.IsMatch(password,"[a-zA-Z0-9]")){
+                        yield return new ValidationResult ("パスワードは半角英数字で入力してください");
+                    }
+                }
+                
+                if(tel == null){
+                    yield return new ValidationResult ("電話番号は必須項目");
+                }else{
+                    if(!Regex.IsMatch(tel,"^0[789]0-[0-9]{4}-[0-9]{4}$")){
+                        yield return new ValidationResult ("電話番号は形式に従ってください");
+                    }
+                }
+                if(address == null){
+                    yield return new ValidationResult ("住所は必須項目");
+                }
             }
     }
 }
