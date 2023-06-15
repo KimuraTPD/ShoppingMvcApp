@@ -113,13 +113,13 @@ namespace ShoppingMvcApp.Migrations
 
             modelBuilder.Entity("ShoppingMvcApp.Models.PurchaseHistory", b =>
                 {
-                    b.HasOne("ShoppingMvcApp.Models.Product", null)
+                    b.HasOne("ShoppingMvcApp.Models.Product", "product")
                         .WithMany("purchaseHistorys")
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShoppingMvcApp.Models.User", null)
+                    b.HasOne("ShoppingMvcApp.Models.User", "user")
                         .WithMany("purchaseHistorys")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)

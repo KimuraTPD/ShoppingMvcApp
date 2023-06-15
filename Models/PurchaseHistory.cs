@@ -25,6 +25,9 @@ namespace ShoppingMvcApp.Models
         [Display(Name="購入日時")]
         public string purchaseDate { get; set; }
 
+        public User user { get; set; }
+        public Product product { get; set; }
+
         public PurchaseHistory(){}
 
         public void showData()

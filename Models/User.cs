@@ -57,6 +57,11 @@ namespace ShoppingMvcApp.Models
             this.password = password;
         }
 
+        public void showData()
+        {
+            Console.WriteLine("userId=" + userId + ", name=" + name + ", mail=" + mail + ", password=" + password + ", tel=" + tel + ", address" + address);
+        }
+
         internal byte[] ObjectToBytes(Object ob)
             {
                 BinaryFormatter bf = new BinaryFormatter();

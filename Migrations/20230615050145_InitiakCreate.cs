@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingMvcApp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitiakCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

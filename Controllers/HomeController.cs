@@ -48,29 +48,29 @@ namespace ShoppingMvcApp.Controllers
 
             var db_data  = _context.User.Where(user => user.mail == str_mail && user.password == str_pass).ToArray();
             
-           User userTmp = new User();
-           this.GetDbData(db_data,userTmp);
+            User userTmp = new User();
+            this.GetDbData(db_data,userTmp);
 
-            User user = new User(userTmp.name,userTmp.mail,userTmp.password,userTmp.tel,userTmp.address);           
+            User user = new User(userTmp.userId, userTmp.name,userTmp.mail,userTmp.password,userTmp.tel,userTmp.address);           
 
             HttpContext.Session.Set("object", user.ObjectToBytes(user));
             user = (User)user.ct(HttpContext.Session.Get("object"));
 
             //Console.WriteLine(ViewData["tel"]);
 
-             if(db_data.Length ==1){
+            if(db_data.Length ==1){
                 Console.WriteLine("ログイン成功");
                 return View("../Products/Index", _context.Product);
-             }else{
-                 Console.WriteLine("ログイン失敗");
-             }
+            }else{
+                Console.WriteLine("ログイン失敗");
+            }
              
             return View("Index");
         }  
         private void GetDbData(User[] db_data,User user){
-            User tmp;
             foreach (var item in db_data)
              {
+                user.userId = item.userId;
                 user.mail = item.mail;
                 ViewData["mail"] = user.mail;
                 user.password = item.password;
@@ -81,7 +81,7 @@ namespace ShoppingMvcApp.Controllers
                 ViewData["tel"] = user.tel;
                 user.address = item.address;
                 ViewData["address"] = user.address;
-             }
+            }
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

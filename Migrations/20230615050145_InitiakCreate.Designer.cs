@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ShoppingMvcApp.Migrations
 {
     [DbContext(typeof(ShoppingMvcAppContext))]
-    [Migration("20230615024040_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230615050145_InitiakCreate")]
+    partial class InitiakCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,13 +115,13 @@ namespace ShoppingMvcApp.Migrations
 
             modelBuilder.Entity("ShoppingMvcApp.Models.PurchaseHistory", b =>
                 {
-                    b.HasOne("ShoppingMvcApp.Models.Product", null)
+                    b.HasOne("ShoppingMvcApp.Models.Product", "product")
                         .WithMany("purchaseHistorys")
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShoppingMvcApp.Models.User", null)
+                    b.HasOne("ShoppingMvcApp.Models.User", "user")
                         .WithMany("purchaseHistorys")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -71,8 +71,8 @@ namespace ShoppingMvcApp.Controllers
         }
 
         public async Task<IActionResult> OrderedPage(){
+            User user = new User(); 
             if(HttpContext.Session.Get("object") != null){
-                User user = new User(); 
                 user = (User)user.ct(HttpContext.Session.Get("object"));
                 ViewData["mail"] = user.mail;
                 ViewData["pass"] =  user.password;
@@ -86,13 +86,9 @@ namespace ShoppingMvcApp.Controllers
             if(HttpContext.Session.Get("cartList") != null)
             {
                 cartList = (List<Product>)BytesToObject(HttpContext.Session.Get("cartList"));
-
-                //在庫管理の処理追加
-                int id = 1;
-                
                 // _context.Database.ExecuteSqlCommand("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
                 //_context.Database.SqlQuery<string>("UPDATE investorycontrol SET InvestoryAmount = 1 WHERE productId = {id} ");
-                var icList = _context.InvestoryControl.ToArray();
+                var icList = await _context.InvestoryControl.ToListAsync();
                 foreach(var product in cartList){
                     foreach(var ic in icList){
                         if(product.productId == ic.productId){
@@ -102,10 +98,16 @@ namespace ShoppingMvcApp.Controllers
                     }
                 }
                 await _context.SaveChangesAsync();
-                 
-            }
-            // Sessionにカートリストが存在しない、またはカートリストが空の場合
-            if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
+
+                PurchaseHistorysController phc = new PurchaseHistorysController(_context);
+                await phc.CreatePurchaseHistory(user.userId, cartList);
+
+                // カートを空にする
+                cartList = new List<Product>();
+                HttpContext.Session.Set("cartList", ObjectToBytes(cartList));
+
+            }else if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
+                // Sessionにカートリストが存在しない、またはカートリストが空の場合
                 ViewData["cartList"] = cartList;
                 ViewData["EmptyCartMessage"] = "カートに商品を入れて、「注文確定」ボタンを押下してください。";
                 return View("Index");
