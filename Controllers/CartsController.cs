@@ -92,12 +92,8 @@ namespace ShoppingMvcApp.Controllers
                 var icList = await _context.InvestoryControl.ToListAsync();
                 foreach(var product in cartList){
                     foreach(var ic in icList){
-                            Console.WriteLine("2:" +ic.InvestoryAmount);
-                            Console.WriteLine("2:" +product.count);
                         if(product.productId == ic.productId){
-                            Console.WriteLine("3:" +ic.InvestoryAmount);
-                            Console.WriteLine("3:" +product.count);
-                            if(ic.InvestoryAmount >= product.count && ic.InvestoryAmount -product.count>= 0){
+                            if(ic.InvestoryAmount >= product.count && ic.InvestoryAmount - product.count >= 0){
                                 ic.InvestoryAmount =ic.InvestoryAmount - product.count;
                                 _context.Update(ic);
                                  await _context.SaveChangesAsync();
@@ -112,20 +108,21 @@ namespace ShoppingMvcApp.Controllers
                         await _context.SaveChangesAsync();
 
                 PurchaseHistorysController phc = new PurchaseHistorysController(_context);
-                await phc.CreatePurchaseHistory(user.userId, cartList);
-
-                ViewData["afterCartList"] = cartList;
-                // カートを空にする
-                cartList = new List<Product>();
-                HttpContext.Session.Set("cartList", ObjectToBytes(cartList));               
-                 
-            
+                await phc.CreatePurchaseHistory(user.userId, cartList);            
+            }
             // Sessionにカートリストが存在しない、またはカートリストが空の場合
-            }else if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
+            if(HttpContext.Session.Get("cartList") == null || cartList.Count <= 0){
                 ViewData["cartList"] = cartList;
                 ViewData["EmptyCartMessage"] = "カートに商品を入れて、「注文確定」ボタンを押下してください。";
                 return View("Index");
             }
+            
+            // ViewDataに購入が確定したcartListをセット
+            ViewData["afterCartList"] = cartList;
+            
+            // カートを空にする
+            cartList = new List<Product>();
+            HttpContext.Session.Set("cartList", ObjectToBytes(cartList));   
             return View("../Carts/Ordered");
         }
 
@@ -173,6 +170,7 @@ namespace ShoppingMvcApp.Controllers
                 {
                     p.showData();
                 }
+                Console.WriteLine("cartList.removeAt : " + cartList.Count);
 
                 // カートリストをSessionにセット
                 HttpContext.Session.Set("cartList",ObjectToBytes(cartList));

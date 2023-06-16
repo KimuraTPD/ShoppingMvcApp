@@ -70,7 +70,6 @@ namespace ShoppingMvcApp.Controllers
             }else{
                  ViewData["Message"] = "ログインしてください。"; 
             }
-            var phList = await _context.PurchaseHistory.Where(ph => ph.userId == user.userId).OrderByDescending(ph => ph.detailsId).ToListAsync();
             var list = await _context.PurchaseHistory.Where(ph1 => ph1.userId == user.userId).OrderByDescending(ph => ph.detailsId)
             .Join( _context.Product,
             ph => ph.productId,
